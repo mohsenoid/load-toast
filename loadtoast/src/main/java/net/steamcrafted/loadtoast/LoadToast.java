@@ -2,6 +2,7 @@ package net.steamcrafted.loadtoast;
 
 import android.app.Activity;
 import android.content.Context;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
@@ -21,6 +22,11 @@ public class LoadToast {
     private boolean mInflated = false;
     private boolean mVisible = false;
     private boolean mReAttached = false;
+
+    public LoadToast(Context context, View parentView) {
+        mView = new LoadToastView(context);
+        mParentView = (ViewGroup) parentView;
+    }
 
     public LoadToast(Context context) {
         mView = new LoadToastView(context);
