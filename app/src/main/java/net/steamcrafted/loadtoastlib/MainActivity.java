@@ -1,14 +1,12 @@
 package net.steamcrafted.loadtoastlib;
 
-import android.app.Activity;
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import net.steamcrafted.loadtoast.LoadToast;
 import net.steamcrafted.loadtoast.MaterialProgressDrawable;
