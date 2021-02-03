@@ -2,7 +2,7 @@ apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 apply plugin: 'com.jfrog.bintray'
 
-version = "1.1.1"
+version = "1.1.2"
 group = "com.mohsenoid.load-toast"
 
 def siteUrl = "http://mohsenoid.com/load-toast"
@@ -16,8 +16,8 @@ android {
         minSdkVersion 14
         targetSdkVersion 30
 
-        versionCode 3
-        versionName "1.1.1"
+        versionCode 4
+        versionName "1.1.2"
     }
     buildTypes {
         release {
