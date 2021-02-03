@@ -29,7 +29,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.graphics.drawable.Animatable;
 import android.graphics.drawable.Drawable;
-
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -45,6 +44,12 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     public static final int LARGE = 0;
     // Maps to ProgressBar default style
     public static final int DEFAULT = 1;
+    static final float STROKE_WIDTH_LARGE = 3f;
+    /**
+     * Layout info for the arrowhead for the large spinner in dp
+     */
+    static final int ARROW_WIDTH_LARGE = 12;
+    static final int ARROW_HEIGHT_LARGE = 6;
     private static final Interpolator LINEAR_INTERPOLATOR = new LinearInterpolator();
     private static final Interpolator END_CURVE_INTERPOLATOR = new EndCurveInterpolator();
     private static final Interpolator START_CURVE_INTERPOLATOR = new StartCurveInterpolator();
@@ -56,7 +61,6 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     // Maps to ProgressBar.Large style
     private static final int CIRCLE_DIAMETER_LARGE = 56;
     private static final float CENTER_RADIUS_LARGE = 12.5f;
-    static final float STROKE_WIDTH_LARGE = 3f;
     /**
      * The duration of a single progress spin in milliseconds.
      */
@@ -71,11 +75,6 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     private static final int ARROW_WIDTH = 10;
     private static final int ARROW_HEIGHT = 5;
     private static final float ARROW_OFFSET_ANGLE = 0;
-    /**
-     * Layout info for the arrowhead for the large spinner in dp
-     */
-    static final int ARROW_WIDTH_LARGE = 12;
-    static final int ARROW_HEIGHT_LARGE = 6;
     private static final float MAX_PROGRESS_ARC = .8f;
     private final int[] COLORS = new int[]{
             Color.BLACK
@@ -109,8 +108,8 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
      * Canvas rotation in degrees.
      */
     private float mRotation;
-    private Resources mResources;
-    private View mAnimExcutor;
+    private final Resources mResources;
+    private final View mAnimExcutor;
     private Animation mAnimation;
     private float mRotationCount;
     private double mWidth;
@@ -129,33 +128,31 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
     }
 
     public void setSizeParameters(double progressCircleWidth, double progressCircleHeight,
-                                   double centerRadius, double strokeWidth, float arrowWidth, float arrowHeight) {
+                                  double centerRadius, double strokeWidth, float arrowWidth, float arrowHeight) {
         final Ring ring = mRing;
         mWidth = progressCircleWidth;
-        mHeight = progressCircleHeight ;
-        ring.setStrokeWidth((float) strokeWidth );
+        mHeight = progressCircleHeight;
+        ring.setStrokeWidth((float) strokeWidth);
         ring.setCenterRadius(centerRadius);
         ring.setColorIndex(0);
-        ring.setArrowDimensions(arrowWidth , arrowHeight );
+        ring.setArrowDimensions(arrowWidth, arrowHeight);
         ring.setInsets((int) mWidth, (int) mHeight);
     }
 
     /**
      * Set the overall size for the progress spinner. This updates the radius
      * and stroke width of the ring.
-     *
-
      */
     public void updateSizes(@ProgressDrawableSize int size) {
         final DisplayMetrics metrics = mResources.getDisplayMetrics();
         final float screenDensity = metrics.density;
 
         if (size == LARGE) {
-            setSizeParameters(CIRCLE_DIAMETER_LARGE*screenDensity, CIRCLE_DIAMETER_LARGE*screenDensity, CENTER_RADIUS_LARGE*screenDensity,
-                    STROKE_WIDTH_LARGE*screenDensity, ARROW_WIDTH_LARGE*screenDensity, ARROW_HEIGHT_LARGE*screenDensity);
+            setSizeParameters(CIRCLE_DIAMETER_LARGE * screenDensity, CIRCLE_DIAMETER_LARGE * screenDensity, CENTER_RADIUS_LARGE * screenDensity,
+                    STROKE_WIDTH_LARGE * screenDensity, ARROW_WIDTH_LARGE * screenDensity, ARROW_HEIGHT_LARGE * screenDensity);
         } else {
-            setSizeParameters(CIRCLE_DIAMETER*screenDensity, CIRCLE_DIAMETER*screenDensity, CENTER_RADIUS*screenDensity, STROKE_WIDTH*screenDensity,
-                    ARROW_WIDTH*screenDensity, ARROW_HEIGHT*screenDensity);
+            setSizeParameters(CIRCLE_DIAMETER * screenDensity, CIRCLE_DIAMETER * screenDensity, CENTER_RADIUS * screenDensity, STROKE_WIDTH * screenDensity,
+                    ARROW_WIDTH * screenDensity, ARROW_HEIGHT * screenDensity);
         }
     }
 
@@ -263,7 +260,7 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
 
     @Override
     public boolean isRunning() {
-        return  !this.mAnimation.hasEnded();
+        return !this.mAnimation.hasEnded();
     }
 
     @Override
@@ -333,10 +330,10 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
                     float startTrim = startingTrim + (MAX_PROGRESS_ARC
                             * END_CURVE_INTERPOLATOR.getInterpolation(interpolatedTime));
 
-                    final float sweepTrim =  endTrim-startTrim;
+                    final float sweepTrim = endTrim - startTrim;
                     //Avoid the ring to be a full circle
-                    if(Math.abs(sweepTrim)>=1){
-                        endTrim = startTrim+0.5f;
+                    if (Math.abs(sweepTrim) >= 1) {
+                        endTrim = startTrim + 0.5f;
                     }
 
                     ring.setEndTrim(endTrim);
@@ -495,12 +492,12 @@ public class MaterialProgressDrawable extends Drawable implements Animatable {
                 mArrow.lineTo((mArrowWidth) * mArrowScale, 0);
                 mArrow.lineTo(((mArrowWidth) * mArrowScale / 2), (mArrowHeight
                         * mArrowScale));
-                mArrow.offset(x-((mArrowWidth) * mArrowScale / 2), y);
+                mArrow.offset(x - ((mArrowWidth) * mArrowScale / 2), y);
                 mArrow.close();
                 // draw a triangle
                 mArrowPaint.setColor(mColors[mColorIndex]);
                 //when sweepAngle < 0 adjust the position of the arrow
-                c.rotate(startAngle + (sweepAngle<0?0:sweepAngle) - ARROW_OFFSET_ANGLE, bounds.exactCenterX(),
+                c.rotate(startAngle + (sweepAngle < 0 ? 0 : sweepAngle) - ARROW_OFFSET_ANGLE, bounds.exactCenterX(),
                         bounds.exactCenterY());
                 c.drawPath(mArrow, mArrowPaint);
             }

@@ -2,7 +2,6 @@ package net.steamcrafted.loadtoast;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
 import android.view.animation.DecelerateInterpolator;
@@ -12,13 +11,10 @@ import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
-/**
- * Created by Wannes2 on 23/04/2015.
- */
 public class LoadToast {
     private String mText = "";
-    private LoadToastView mView;
-    private ViewGroup mParentView;
+    private final LoadToastView mView;
+    private final ViewGroup mParentView;
     private int mTranslationY = 0;
     private boolean mShowCalled = false;
     private boolean mToastCanceled = false;
@@ -26,15 +22,15 @@ public class LoadToast {
     private boolean mVisible = false;
     private boolean mReAttached = false;
 
-    public LoadToast(Context context){
+    public LoadToast(Context context) {
         mView = new LoadToastView(context);
         mParentView = (ViewGroup) ((Activity) context).getWindow().getDecorView();
     }
 
     private void cleanup() {
         int childCount = mParentView.getChildCount();
-        for(int i = childCount; i >= 0; i--){
-            if(mParentView.getChildAt(i) instanceof LoadToastView){
+        for (int i = childCount; i >= 0; i--) {
+            if (mParentView.getChildAt(i) instanceof LoadToastView) {
                 LoadToastView ltv = (LoadToastView) mParentView.getChildAt(i);
                 ltv.cleanup();
                 mParentView.removeViewAt(i);
@@ -45,64 +41,64 @@ public class LoadToast {
         mToastCanceled = false;
     }
 
-    public LoadToast setTranslationY(int pixels){
+    public LoadToast setTranslationY(int pixels) {
         mTranslationY = pixels;
         return this;
     }
 
-    public LoadToast setText(String message){
+    public LoadToast setText(String message) {
         mText = message;
         mView.setText(mText);
         return this;
     }
 
-    public LoadToast setTextColor(int color){
+    public LoadToast setTextColor(int color) {
         mView.setTextColor(color);
         return this;
     }
 
-    public LoadToast setBackgroundColor(int color){
+    public LoadToast setBackgroundColor(int color) {
         mView.setBackgroundColor(color);
         return this;
     }
 
-    public LoadToast setProgressColor(int color){
+    public LoadToast setProgressColor(int color) {
         mView.setProgressColor(color);
         return this;
     }
 
-    public LoadToast setTextDirection(boolean isLeftToRight){
+    public LoadToast setTextDirection(boolean isLeftToRight) {
         mView.setTextDirection(isLeftToRight);
         return this;
     }
 
-    public LoadToast setBorderColor(int color){
+    public LoadToast setBorderColor(int color) {
         mView.setBorderColor(color);
         return this;
     }
 
-    public LoadToast setBorderWidthPx(int width){
+    public LoadToast setBorderWidthPx(int width) {
         mView.setBorderWidthPx(width);
         return this;
     }
 
-    public LoadToast setBorderWidthRes(int resourceId){
+    public LoadToast setBorderWidthRes(int resourceId) {
         mView.setBorderWidthRes(resourceId);
         return this;
     }
 
-    public LoadToast setBorderWidthDp(int width){
+    public LoadToast setBorderWidthDp(int width) {
         mView.setBorderWidthDp(width);
         return this;
     }
 
-    public LoadToast show(){
+    public LoadToast show() {
         mShowCalled = true;
         attach();
         return this;
     }
 
-    private void showInternal(){
+    private void showInternal() {
         mView.show();
         ViewHelper.setTranslationX(mView, (mParentView.getWidth() - mView.getWidth()) / 2);
         ViewHelper.setAlpha(mView, 0f);
@@ -129,48 +125,48 @@ public class LoadToast {
                 ViewHelper.setTranslationX(mView, (mParentView.getWidth() - mView.getWidth()) / 2);
                 ViewHelper.setTranslationY(mView, -mView.getHeight() + mTranslationY);
                 mInflated = true;
-                if(!mToastCanceled && mShowCalled) showInternal();
+                if (!mToastCanceled && mShowCalled) showInternal();
             }
-        },1);
+        }, 1);
     }
 
-    public void success(){
-        if(!mInflated){
+    public void success() {
+        if (!mInflated) {
             mToastCanceled = true;
             return;
         }
-        if(mReAttached){
+        if (mReAttached) {
             mView.success();
             slideUp();
         }
     }
 
-    public void error(){
-        if(!mInflated){
+    public void error() {
+        if (!mInflated) {
             mToastCanceled = true;
             return;
         }
-        if(mReAttached){
+        if (mReAttached) {
             mView.error();
             slideUp();
         }
     }
 
-    public void hide(){
-        if(!mInflated){
+    public void hide() {
+        if (!mInflated) {
             mToastCanceled = true;
             return;
         }
-        if(mReAttached){
+        if (mReAttached) {
             slideUp(0);
         }
     }
 
-    private void slideUp(){
+    private void slideUp() {
         slideUp(1000);
     }
 
-    private void slideUp(int startDelay){
+    private void slideUp(int startDelay) {
         mReAttached = false;
 
         ViewPropertyAnimator.animate(mView).setStartDelay(startDelay).alpha(0f)
@@ -180,7 +176,7 @@ public class LoadToast {
                 .setListener(new AnimatorListenerAdapter() {
                     @Override
                     public void onAnimationEnd(Animator animation) {
-                        if(!mReAttached){
+                        if (!mReAttached) {
                             cleanup();
                         }
                     }
