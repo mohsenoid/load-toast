@@ -4,7 +4,7 @@ The default toasts are ugly and don't really provide much more than a short mess
 
 # Demo
 
-![](http://i.imgur.com/WwoxLMu.gif)
+![Demo](http://i.imgur.com/WwoxLMu.gif)
 
 # Usage
 
@@ -13,7 +13,7 @@ The default toasts are ugly and don't really provide much more than a short mess
 #### Gradle
 ```groovy
 dependencies {
-    compile 'net.steamcrafted:load-toast:1.0.12'
+    compile 'com.mohsenoid:load-toast:1.1.1'
 }
 ```
 
@@ -87,4 +87,4 @@ These can be chained as you can see.
 
 # License
 
-Released under the [Apache 2.0 License](https://github.com/code-mc/loadtoast/blob/master/license.md)
+This is an updated fork from https://github.com/code-mc/loadtoast repository which unfortunately is not active anymore and was release under the [Apache 2.0 License](https://github.com/code-mc/loadtoast/blob/master/license.md)

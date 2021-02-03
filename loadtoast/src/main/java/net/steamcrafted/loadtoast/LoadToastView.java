@@ -85,8 +85,8 @@ public class LoadToastView extends ImageView {
         borderPaint.setColor(Color.TRANSPARENT);
         borderPaint.setStyle(Paint.Style.STROKE);
 
-        successPaint.setColor(getResources().getColor(R.color.color_success));
-        errorPaint.setColor(getResources().getColor(R.color.color_error));
+        successPaint.setColor(getResources().getColor(R.color.loadtoast__color_success));
+        errorPaint.setColor(getResources().getColor(R.color.loadtoast__color_error));
         successPaint.setAntiAlias(true);
         errorPaint.setAntiAlias(true);
 
@@ -101,9 +101,9 @@ public class LoadToastView extends ImageView {
         iconBounds = new Rect(TOAST_HEIGHT + MAX_TEXT_WIDTH - padding, padding, TOAST_HEIGHT + MAX_TEXT_WIDTH - padding + IMAGE_WIDTH, IMAGE_WIDTH + padding);
         //loadicon = getResources().getDrawable(R.mipmap.ic_launcher);
         //loadicon.setBounds(iconBounds);
-        completeicon = getResources().getDrawable(R.drawable.ic_navigation_check);
+        completeicon = getResources().getDrawable(R.drawable.loadtoast__ic_navigation_check);
         completeicon.setBounds(iconBounds);
-        failedicon = getResources().getDrawable(R.drawable.ic_error);
+        failedicon = getResources().getDrawable(R.drawable.loadtoast__ic_error);
         failedicon.setBounds(iconBounds);
 
         va = ValueAnimator.ofFloat(0, 1);
