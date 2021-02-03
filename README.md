@@ -19,10 +19,16 @@ dependencies {
 
 ## Step 2
 
-The API is very simple, create a new toast by providing a context:
+The API is very simple, create a new toast by providing an Activity:
 
 ```java
-LoadToast lt = new LoadToast(context);
+LoadToast lt = new LoadToast(activity);
+```
+
+or context and a parent view:
+
+```java
+LoadToast lt = new LoadToast(context, parentView);
 ```
 
 Change the displayed text:

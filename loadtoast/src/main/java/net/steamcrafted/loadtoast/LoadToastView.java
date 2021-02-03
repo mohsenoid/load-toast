@@ -8,6 +8,7 @@ import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.Rect;
 import android.graphics.RectF;
+import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.util.Log;
@@ -23,8 +24,6 @@ import com.nineoldandroids.animation.ValueAnimator;
 
 public class LoadToastView extends ImageView {
 
-    private String mText = "";
-
     private final Paint textPaint = new Paint();
     private final Paint backPaint = new Paint();
     private final Paint iconBackPaint = new Paint();
@@ -32,11 +31,15 @@ public class LoadToastView extends ImageView {
     private final Paint successPaint = new Paint();
     private final Paint errorPaint = new Paint();
     private final Paint borderPaint = new Paint();
-
     private final Rect iconBounds;
     private final Rect mTextBounds = new Rect();
     private final RectF spinnerRect = new RectF();
-
+    private final Drawable completeicon;
+    private final Drawable failedicon;
+    private final ValueAnimator va;
+    private final Path toastPath = new Path();
+    private final AccelerateDecelerateInterpolator easeinterpol = new AccelerateDecelerateInterpolator();
+    private String mText = "";
     private int MAX_TEXT_WIDTH = 100; // in DP
     private int BASE_TEXT_SIZE = 20;
     private int IMAGE_WIDTH = 40;
@@ -44,21 +47,11 @@ public class LoadToastView extends ImageView {
     private int LINE_WIDTH = 3;
     private float WIDTH_SCALE = 0f;
     private int MARQUE_STEP = 1;
-
     private long prevUpdate = 0;
-
-    private final Drawable completeicon;
-    private final Drawable failedicon;
-
-    private final ValueAnimator va;
     private ValueAnimator cmp;
-
     private boolean success = true;
     private boolean outOfBounds = false;
     private boolean mLtr = true;
-
-    private final Path toastPath = new Path();
-    private final AccelerateDecelerateInterpolator easeinterpol = new AccelerateDecelerateInterpolator();
     private MaterialProgressDrawable spinnerDrawable;
 
     private int borderOffset = dpToPx(1);
@@ -158,6 +151,15 @@ public class LoadToastView extends ImageView {
         mLtr = isLeftToRight;
     }
 
+    public void setTextTypeface(Typeface typeface) {
+        textPaint.setTypeface(typeface);
+    }
+
+    public void setTextSize(int size) {
+        size = spToPx(size);
+        textPaint.setTextSize(size);
+    }
+
     public void setBackgroundColor(int color) {
         backPaint.setColor(color);
         iconBackPaint.setColor(color);
@@ -250,6 +252,10 @@ public class LoadToastView extends ImageView {
 
     private int dpToPx(int dp) {
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, getResources().getDisplayMetrics());
+    }
+
+    private int spToPx(int dp) {
+        return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_SP, dp, getResources().getDisplayMetrics());
     }
 
     public void setText(String text) {

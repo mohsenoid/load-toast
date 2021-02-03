@@ -2,6 +2,7 @@ package net.steamcrafted.loadtoast;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Typeface;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateInterpolator;
@@ -13,9 +14,9 @@ import com.nineoldandroids.view.ViewHelper;
 import com.nineoldandroids.view.ViewPropertyAnimator;
 
 public class LoadToast {
-    private String mText = "";
     private final LoadToastView mView;
     private final ViewGroup mParentView;
+    private String mText = "";
     private int mTranslationY = 0;
     private boolean mShowCalled = false;
     private boolean mToastCanceled = false;
@@ -28,9 +29,9 @@ public class LoadToast {
         mParentView = (ViewGroup) parentView;
     }
 
-    public LoadToast(Context context) {
-        mView = new LoadToastView(context);
-        mParentView = (ViewGroup) ((Activity) context).getWindow().getDecorView();
+    public LoadToast(Activity activity) {
+        mView = new LoadToastView(activity);
+        mParentView = (ViewGroup) activity.getWindow().getDecorView();
     }
 
     private void cleanup() {
@@ -60,6 +61,16 @@ public class LoadToast {
 
     public LoadToast setTextColor(int color) {
         mView.setTextColor(color);
+        return this;
+    }
+
+    public LoadToast setTextTypeface(Typeface typeface) {
+        mView.setTextTypeface(typeface);
+        return this;
+    }
+
+    public LoadToast setTextSize(int size) {
+        mView.setTextSize(size);
         return this;
     }
 
