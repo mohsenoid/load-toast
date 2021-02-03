@@ -155,7 +155,7 @@ public class LoadToastView extends ImageView {
         textPaint.setTypeface(typeface);
     }
 
-    public void setTextSize(int size) {
+    public void setTextSizeSp(int size) {
         size = spToPx(size);
         textPaint.setTextSize(size);
     }

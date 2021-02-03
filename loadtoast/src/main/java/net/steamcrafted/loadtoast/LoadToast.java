@@ -69,8 +69,8 @@ public class LoadToast {
         return this;
     }
 
-    public LoadToast setTextSize(int size) {
-        mView.setTextSize(size);
+    public LoadToast setTextSizeSp(int size) {
+        mView.setTextSizeSp(size);
         return this;
     }
 
