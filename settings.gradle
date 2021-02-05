@@ -1,1 +1,1 @@
-include ':app', ':loadtoast'
+include ':sample-app', ':load-toast'

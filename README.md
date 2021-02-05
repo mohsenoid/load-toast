@@ -13,7 +13,7 @@ The default toasts are ugly and don't really provide much more than a short mess
 #### Gradle
 ```groovy
 dependencies {
-    compile 'com.mohsenoid:load-toast:1.1.2'
+    compile 'com.mohsenoid:load-toast:load-toast:1.1.2'
 }
 ```
 
