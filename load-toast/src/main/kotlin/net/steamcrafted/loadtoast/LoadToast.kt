@@ -1,9 +1,7 @@
 package net.steamcrafted.loadtoast
 
 import android.app.Activity
-import android.content.Context
 import android.graphics.Typeface
-import android.view.View
 import android.view.ViewGroup
 import android.view.animation.AccelerateInterpolator
 import android.view.animation.DecelerateInterpolator
@@ -12,9 +10,9 @@ import com.nineoldandroids.animation.AnimatorListenerAdapter
 import com.nineoldandroids.view.ViewHelper
 import com.nineoldandroids.view.ViewPropertyAnimator
 
-class LoadToast {
-    private val mView: LoadToastView
-    private val mParentView: ViewGroup
+class LoadToast(activity: Activity) {
+    private val mView: LoadToastView = LoadToastView(activity)
+    private val mParentView: ViewGroup = activity.window.decorView as ViewGroup
     private var mText = ""
     private var mTranslationY = 0
     private var mShowCalled = false
@@ -22,16 +20,6 @@ class LoadToast {
     private var mInflated = false
     private var mVisible = false
     private var mReAttached = false
-
-    constructor(context: Context?, parentView: View) {
-        mView = LoadToastView(context)
-        mParentView = parentView as ViewGroup
-    }
-
-    constructor(activity: Activity) {
-        mView = LoadToastView(activity)
-        mParentView = activity.window.decorView as ViewGroup
-    }
 
     private fun cleanup() {
         val childCount = mParentView.childCount
@@ -120,16 +108,16 @@ class LoadToast {
         ViewHelper.setTranslationY(mView, (-mView.height + mTranslationY).toFloat())
         //mView.setVisibility(View.VISIBLE);
         ViewPropertyAnimator.animate(mView).alpha(1f).translationY((25 + mTranslationY).toFloat())
-            .setInterpolator(DecelerateInterpolator())
-            .setListener(null)
-            .setDuration(300).setStartDelay(0).start()
+                .setInterpolator(DecelerateInterpolator())
+                .setListener(null)
+                .setDuration(300).setStartDelay(0).start()
         mVisible = true
     }
 
     private fun attach() {
         cleanup()
         mReAttached = true
-        mParentView.addView(mView, ViewGroup.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT))
+        mParentView.addView(mView, layoutParams)
         ViewHelper.setAlpha(mView, 0f)
         mParentView.postDelayed({
             ViewHelper.setTranslationX(mView, ((mParentView.width - mView.width) / 2).toFloat())
@@ -174,17 +162,24 @@ class LoadToast {
     private fun slideUp(startDelay: Int = 1000) {
         mReAttached = false
         ViewPropertyAnimator.animate(mView).setStartDelay(startDelay.toLong()).alpha(0f)
-            .translationY((-mView.height + mTranslationY).toFloat())
-            .setInterpolator(AccelerateInterpolator())
-            .setDuration(300)
-            .setListener(object : AnimatorListenerAdapter() {
-                override fun onAnimationEnd(animation: Animator?) {
-                    if (!mReAttached) {
-                        cleanup()
+                .translationY((-mView.height + mTranslationY).toFloat())
+                .setInterpolator(AccelerateInterpolator())
+                .setDuration(300)
+                .setListener(object : AnimatorListenerAdapter() {
+                    override fun onAnimationEnd(animation: Animator?) {
+                        if (!mReAttached) {
+                            cleanup()
+                        }
                     }
-                }
-            })
-            .start()
+                })
+                .start()
         mVisible = false
+    }
+
+    companion object {
+        private val layoutParams = ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT
+        )
     }
 }

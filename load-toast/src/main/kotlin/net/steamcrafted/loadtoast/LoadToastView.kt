@@ -1,13 +1,7 @@
 package net.steamcrafted.loadtoast
 
 import android.content.Context
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.Paint
-import android.graphics.Path
-import android.graphics.Rect
-import android.graphics.RectF
-import android.graphics.Typeface
+import android.graphics.*
 import android.graphics.drawable.Drawable
 import android.os.Build
 import android.util.Log
@@ -97,12 +91,12 @@ class LoadToastView(context: Context?) : ImageView(context) {
         val padding = (TOAST_HEIGHT - IMAGE_WIDTH) / 2
 
         iconBounds =
-            Rect(
-                TOAST_HEIGHT + MAX_TEXT_WIDTH - padding,
-                padding,
-                TOAST_HEIGHT + MAX_TEXT_WIDTH - padding + IMAGE_WIDTH,
-                IMAGE_WIDTH + padding
-            )
+                Rect(
+                        TOAST_HEIGHT + MAX_TEXT_WIDTH - padding,
+                        padding,
+                        TOAST_HEIGHT + MAX_TEXT_WIDTH - padding + IMAGE_WIDTH,
+                        IMAGE_WIDTH + padding
+                )
 
         //loadicon = getResources().getDrawable(R.mipmap.ic_launcher);
         //loadicon.setBounds(iconBounds);
@@ -130,9 +124,9 @@ class LoadToastView(context: Context?) : ImageView(context) {
         val mDiameter = TOAST_HEIGHT
         val mProgressStokeWidth = LINE_WIDTH
         spinnerDrawable!!.setSizeParameters(
-            mDiameter.toDouble(), mDiameter.toDouble(), (
+                mDiameter.toDouble(), mDiameter.toDouble(), (
                 (mDiameter - mProgressStokeWidth * 2) / 4).toDouble(),
-            mProgressStokeWidth.toDouble(), (
+                mProgressStokeWidth.toDouble(), (
                 mProgressStokeWidth * 4).toFloat(), (
                 mProgressStokeWidth * 2).toFloat()
         )
@@ -284,7 +278,7 @@ class LoadToastView(context: Context?) : ImageView(context) {
         val textOpactity = Math.max(0f, ws * 10f - 9f)
         textPaint.alpha = (textOpactity * 255).toInt()
         spinnerRect[iconBounds.left + 4.dpToPx() - translateLoad / 2, (iconBounds.top + 4.dpToPx()).toFloat(), iconBounds.right - 4.dpToPx() - translateLoad / 2] =
-            (iconBounds.bottom - 4.dpToPx()).toFloat()
+                (iconBounds.bottom - 4.dpToPx()).toFloat()
         val circleOffset = (TOAST_HEIGHT * 2 * (Math.sqrt(2.0) - 1) / 3).toInt()
         val th = TOAST_HEIGHT
         val pd = (TOAST_HEIGHT - IMAGE_WIDTH) / 2
@@ -304,20 +298,20 @@ class LoadToastView(context: Context?) : ImageView(context) {
         toastPath.rCubicTo(0f, circleOffset.toFloat(), (circleOffset - th / 2).toFloat(), (th / 2).toFloat(), (-th / 2).toFloat(), (th / 2).toFloat())
         toastPath.rLineTo(ws * (-IMAGE_WIDTH - MAX_TEXT_WIDTH), 0f)
         toastPath.rCubicTo(
-            -circleOffset.toFloat(),
-            0f,
-            (-th / 2).toFloat(),
-            (-th / 2 + circleOffset).toFloat(),
-            (-th / 2).toFloat(),
-            (-th / 2).toFloat()
+                -circleOffset.toFloat(),
+                0f,
+                (-th / 2).toFloat(),
+                (-th / 2 + circleOffset).toFloat(),
+                (-th / 2).toFloat(),
+                (-th / 2).toFloat()
         )
         toastPath.rCubicTo(
-            0f,
-            -circleOffset.toFloat(),
-            (-circleOffset + th / 2).toFloat(),
-            (-th / 2).toFloat(),
-            (th / 2).toFloat(),
-            (-th / 2).toFloat()
+                0f,
+                -circleOffset.toFloat(),
+                (-circleOffset + th / 2).toFloat(),
+                (-th / 2).toFloat(),
+                (th / 2).toFloat(),
+                (-th / 2).toFloat()
         )
         c.drawCircle(spinnerRect.centerX(), spinnerRect.centerY(), iconBounds.height() / 1.9f, backPaint)
         c.drawPath(toastPath, backPaint)
@@ -326,37 +320,37 @@ class LoadToastView(context: Context?) : ImageView(context) {
         toastPath.moveTo(leftMargin + th / 2, borderOffset.toFloat())
         toastPath.rLineTo(ws * (IMAGE_WIDTH + MAX_TEXT_WIDTH), 0f)
         toastPath.rCubicTo(
-            circleOffset.toFloat(),
-            0f,
-            (thb / 2).toFloat(),
-            (thb / 2 - circleOffset).toFloat(),
-            (thb / 2).toFloat(),
-            (thb / 2).toFloat()
+                circleOffset.toFloat(),
+                0f,
+                (thb / 2).toFloat(),
+                (thb / 2 - circleOffset).toFloat(),
+                (thb / 2).toFloat(),
+                (thb / 2).toFloat()
         )
         toastPath.rCubicTo(
-            0f,
-            circleOffset.toFloat(),
-            (circleOffset - thb / 2).toFloat(),
-            (thb / 2).toFloat(),
-            (-thb / 2).toFloat(),
-            (thb / 2).toFloat()
+                0f,
+                circleOffset.toFloat(),
+                (circleOffset - thb / 2).toFloat(),
+                (thb / 2).toFloat(),
+                (-thb / 2).toFloat(),
+                (thb / 2).toFloat()
         )
         toastPath.rLineTo(ws * (-IMAGE_WIDTH - MAX_TEXT_WIDTH), 0f)
         toastPath.rCubicTo(
-            -circleOffset.toFloat(),
-            0f,
-            (-thb / 2).toFloat(),
-            (-thb / 2 + circleOffset).toFloat(),
-            (-thb / 2).toFloat(),
-            (-thb / 2).toFloat()
+                -circleOffset.toFloat(),
+                0f,
+                (-thb / 2).toFloat(),
+                (-thb / 2 + circleOffset).toFloat(),
+                (-thb / 2).toFloat(),
+                (-thb / 2).toFloat()
         )
         toastPath.rCubicTo(
-            0f,
-            -circleOffset.toFloat(),
-            (-circleOffset + thb / 2).toFloat(),
-            (-thb / 2).toFloat(),
-            (thb / 2).toFloat(),
-            (-thb / 2).toFloat()
+                0f,
+                -circleOffset.toFloat(),
+                (-circleOffset + thb / 2).toFloat(),
+                (-thb / 2).toFloat(),
+                (thb / 2).toFloat(),
+                (-thb / 2).toFloat()
         )
         c.drawPath(toastPath, borderPaint)
         toastPath.reset()
@@ -381,14 +375,14 @@ class LoadToastView(context: Context?) : ImageView(context) {
             val paddingicon = ((1f - (.25f + .75f * circleProg)) * TOAST_HEIGHT / 2).toInt()
             val completeoff = ((1f - circleProg) * TOAST_HEIGHT / 8).toInt()
             icon.setBounds(
-                spinnerRect.left.toInt() + paddingicon,
-                spinnerRect.top.toInt() + paddingicon + completeoff,
-                spinnerRect.right.toInt() - paddingicon,
-                spinnerRect.bottom.toInt() - paddingicon + completeoff
+                    spinnerRect.left.toInt() + paddingicon,
+                    spinnerRect.top.toInt() + paddingicon + completeoff,
+                    spinnerRect.right.toInt() - paddingicon,
+                    spinnerRect.bottom.toInt() - paddingicon + completeoff
             )
             c.drawCircle(
-                leftMargin + TOAST_HEIGHT / 2, (1f - circleProg) * TOAST_HEIGHT / 8 + TOAST_HEIGHT / 2,
-                (.25f + .75f * circleProg) * TOAST_HEIGHT / 2, if (success) successPaint else errorPaint
+                    leftMargin + TOAST_HEIGHT / 2, (1f - circleProg) * TOAST_HEIGHT / 8 + TOAST_HEIGHT / 2,
+                    (.25f + .75f * circleProg) * TOAST_HEIGHT / 2, if (success) successPaint else errorPaint
             )
             c.save()
             c.rotate(90 * (1f - circleProg), leftMargin + TOAST_HEIGHT / 2, (TOAST_HEIGHT / 2).toFloat())
@@ -421,8 +415,8 @@ class LoadToastView(context: Context?) : ImageView(context) {
 
     override fun onMeasure(widthMeasureSpec: Int, heightMeasureSpec: Int) {
         setMeasuredDimension(
-            measureWidth(widthMeasureSpec),
-            measureHeight(heightMeasureSpec)
+                measureWidth(widthMeasureSpec),
+                measureHeight(heightMeasureSpec)
         )
     }
 

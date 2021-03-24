@@ -17,24 +17,14 @@ package net.steamcrafted.loadtoast
 
 import android.content.Context
 import android.content.res.Resources
-import android.graphics.Canvas
-import android.graphics.Color
-import android.graphics.ColorFilter
-import android.graphics.Paint
-import android.graphics.Path
-import android.graphics.PixelFormat
-import android.graphics.Rect
-import android.graphics.RectF
+import android.graphics.*
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.Drawable
 import android.view.View
-import android.view.animation.AccelerateDecelerateInterpolator
-import android.view.animation.Animation
+import android.view.animation.*
 import android.view.animation.Animation.AnimationListener
 import android.view.animation.Interpolator
-import android.view.animation.LinearInterpolator
-import android.view.animation.Transformation
-import java.util.ArrayList
+import java.util.*
 
 class MaterialProgressDrawable(context: Context, private val mAnimExcutor: View) : Drawable(), Animatable {
 
@@ -86,8 +76,8 @@ class MaterialProgressDrawable(context: Context, private val mAnimExcutor: View)
     }
 
     fun setSizeParameters(
-        progressCircleWidth: Double, progressCircleHeight: Double,
-        centerRadius: Double, strokeWidth: Double, arrowWidth: Float, arrowHeight: Float
+            progressCircleWidth: Double, progressCircleHeight: Double,
+            centerRadius: Double, strokeWidth: Double, arrowWidth: Float, arrowHeight: Float
     ) {
         val ring = mRing
         mWidth = progressCircleWidth
@@ -108,22 +98,22 @@ class MaterialProgressDrawable(context: Context, private val mAnimExcutor: View)
         val screenDensity = metrics.density
         if (size == LARGE) {
             setSizeParameters(
-                (CIRCLE_DIAMETER_LARGE * screenDensity).toDouble(),
-                (CIRCLE_DIAMETER_LARGE * screenDensity).toDouble(),
-                (CENTER_RADIUS_LARGE * screenDensity).toDouble(),
-                (
-                    STROKE_WIDTH_LARGE * screenDensity).toDouble(),
-                ARROW_WIDTH_LARGE * screenDensity,
-                ARROW_HEIGHT_LARGE * screenDensity
+                    (CIRCLE_DIAMETER_LARGE * screenDensity).toDouble(),
+                    (CIRCLE_DIAMETER_LARGE * screenDensity).toDouble(),
+                    (CENTER_RADIUS_LARGE * screenDensity).toDouble(),
+                    (
+                            STROKE_WIDTH_LARGE * screenDensity).toDouble(),
+                    ARROW_WIDTH_LARGE * screenDensity,
+                    ARROW_HEIGHT_LARGE * screenDensity
             )
         } else {
             setSizeParameters(
-                (CIRCLE_DIAMETER * screenDensity).toDouble(),
-                (CIRCLE_DIAMETER * screenDensity).toDouble(),
-                (CENTER_RADIUS * screenDensity).toDouble(),
-                (STROKE_WIDTH * screenDensity).toDouble(),
-                ARROW_WIDTH * screenDensity,
-                ARROW_HEIGHT * screenDensity
+                    (CIRCLE_DIAMETER * screenDensity).toDouble(),
+                    (CIRCLE_DIAMETER * screenDensity).toDouble(),
+                    (CENTER_RADIUS * screenDensity).toDouble(),
+                    (STROKE_WIDTH * screenDensity).toDouble(),
+                    ARROW_WIDTH * screenDensity,
+                    ARROW_HEIGHT * screenDensity
             )
         }
     }
@@ -255,12 +245,12 @@ class MaterialProgressDrawable(context: Context, private val mAnimExcutor: View)
         // starting other circles
         // Rotation goes between [0..1].
         val targetRotation = (Math.floor((ring.startingRotation / MAX_PROGRESS_ARC).toDouble())
-            + 1f).toFloat()
+                + 1f).toFloat()
         val startTrim = (ring.startingStartTrim
-            + (ring.startingEndTrim - ring.startingStartTrim) * interpolatedTime)
+                + (ring.startingEndTrim - ring.startingStartTrim) * interpolatedTime)
         ring.startTrim = startTrim
         val rotation = (ring.startingRotation
-            + (targetRotation - ring.startingRotation) * interpolatedTime)
+                + (targetRotation - ring.startingRotation) * interpolatedTime)
         ring.rotation = rotation
     }
 
@@ -275,7 +265,7 @@ class MaterialProgressDrawable(context: Context, private val mAnimExcutor: View)
                     // angle that
                     // matches the stroke width.
                     val minProgressArc = Math.toRadians(
-                        ring.strokeWidth / (2 * Math.PI * ring.centerRadius)
+                            ring.strokeWidth / (2 * Math.PI * ring.centerRadius)
                     ).toFloat()
                     val startingEndTrim = ring.startingEndTrim
                     val startingTrim = ring.startingStartTrim
@@ -285,9 +275,9 @@ class MaterialProgressDrawable(context: Context, private val mAnimExcutor: View)
                     // located.
                     val minArc = MAX_PROGRESS_ARC - minProgressArc
                     var endTrim = startingEndTrim + (minArc
-                        * START_CURVE_INTERPOLATOR.getInterpolation(interpolatedTime))
+                            * START_CURVE_INTERPOLATOR.getInterpolation(interpolatedTime))
                     val startTrim = startingTrim + (MAX_PROGRESS_ARC
-                        * END_CURVE_INTERPOLATOR.getInterpolation(interpolatedTime))
+                            * END_CURVE_INTERPOLATOR.getInterpolation(interpolatedTime))
                     val sweepTrim = endTrim - startTrim
                     //Avoid the ring to be a full circle
                     if (Math.abs(sweepTrim) >= 1) {
@@ -298,7 +288,7 @@ class MaterialProgressDrawable(context: Context, private val mAnimExcutor: View)
                     var rotation = startingRotation + 0.25f * interpolatedTime
                     ring.rotation = rotation
                     val groupRotation = (720.0f / NUM_POINTS * interpolatedTime
-                        + 720.0f * (mRotationCount / NUM_POINTS))
+                            + 720.0f * (mRotationCount / NUM_POINTS))
                     rotation = groupRotation
                 }
             }
@@ -416,8 +406,8 @@ class MaterialProgressDrawable(context: Context, private val mAnimExcutor: View)
                 mCirclePaint.color = mBackgroundColor
                 mCirclePaint.alpha = 255 - alpha
                 c.drawCircle(
-                    bounds.exactCenterX(), bounds.exactCenterY(), (bounds.width() / 2).toFloat(),
-                    mCirclePaint
+                        bounds.exactCenterX(), bounds.exactCenterY(), (bounds.width() / 2).toFloat(),
+                        mCirclePaint
                 )
             }
         }
@@ -443,7 +433,7 @@ class MaterialProgressDrawable(context: Context, private val mAnimExcutor: View)
                 mArrow!!.moveTo(0f, 0f)
                 mArrow!!.lineTo(mArrowWidth * mArrowScale, 0f)
                 mArrow!!.lineTo(
-                    mArrowWidth * mArrowScale / 2, mArrowHeight
+                        mArrowWidth * mArrowScale / 2, mArrowHeight
                         * mArrowScale
                 )
                 mArrow!!.offset(x - mArrowWidth * mArrowScale / 2, y)
@@ -452,8 +442,8 @@ class MaterialProgressDrawable(context: Context, private val mAnimExcutor: View)
                 mArrowPaint.color = mColors[mColorIndex]
                 //when sweepAngle < 0 adjust the position of the arrow
                 c.rotate(
-                    startAngle + (if (sweepAngle < 0) 0f else sweepAngle) - ARROW_OFFSET_ANGLE, bounds.exactCenterX(),
-                    bounds.exactCenterY()
+                        startAngle + (if (sweepAngle < 0) 0f else sweepAngle) - ARROW_OFFSET_ANGLE, bounds.exactCenterX(),
+                        bounds.exactCenterY()
                 )
                 c.drawPath(mArrow!!, mArrowPaint)
             }
@@ -650,7 +640,7 @@ class MaterialProgressDrawable(context: Context, private val mAnimExcutor: View)
         private const val MAX_PROGRESS_ARC = .8f
 
         private val COLORS = intArrayOf(
-            Color.BLACK
+                Color.BLACK
         )
     }
 
