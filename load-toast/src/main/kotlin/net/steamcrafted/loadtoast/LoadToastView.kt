@@ -115,6 +115,8 @@ class LoadToastView(context: Context?) : ImageView(context) {
         va.start()
         initSpinner()
         calculateBounds()
+
+        tag = "LoadToast$" + System.currentTimeMillis()
     }
 
     private fun initSpinner() {

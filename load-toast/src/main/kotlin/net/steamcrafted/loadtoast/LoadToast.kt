@@ -24,7 +24,7 @@ class LoadToast(activity: Activity) {
     private fun cleanup() {
         val childCount = mParentView.childCount
         for (i in childCount downTo 0) {
-            if (mParentView.getChildAt(i) is LoadToastView) {
+            if (mParentView.getChildAt(i)?.tag?.equals(mView.tag) == true) {
                 val ltv = mParentView.getChildAt(i) as LoadToastView
                 ltv.cleanup()
                 mParentView.removeViewAt(i)
