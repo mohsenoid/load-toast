@@ -17,7 +17,7 @@ repositories {
 }
 
 dependencies {
-    compile 'com.mohsenoid:load-toast:load-toast:1.1.5'
+    compile 'com.mohsenoid:load-toast:load-toast:1.1.7'
 }
 ```
 
